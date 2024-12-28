@@ -1,0 +1,29 @@
+steps:
+  # Step 1: Build the Docker image (optional, if you are using a custom Dockerfile)
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/my-flask-app', '.']
+
+  # Step 2: Push the Docker image to Container Registry (if you want to use a custom Dockerfile)
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/my-flask-app']
+
+  # Step 3: Deploy to App Engine (using gcloud)
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    args:
+      - 'app'
+      - 'deploy'
+      - '--quiet'  # Suppress confirmation prompts (optional)
+
+
+  # Step 4: Optional - Open the deployed app in the browser after deployment
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    args:
+      - 'app'
+      - 'browse'
+
+timeout: '600s'  # Adjust the timeout as necessary (default is 10 minutes)
+
+options:
+  logging: CLOUD_LOGGING_ONLY
