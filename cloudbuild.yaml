@@ -14,7 +14,8 @@ steps:
       - 'app'
       - 'deploy'
       - '--quiet'  # Suppress confirmation prompts (optional)
-
+      - '--bucket'
+      - 'gs://app_bucket_gcp28_12'
 
   # Step 4: Optional - Open the deployed app in the browser after deployment
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
